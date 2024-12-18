@@ -37,4 +37,29 @@ jobs:
                 name: Test Build
                 run: npm run build --prod
             
-        
+    backend:
+        runs-on: self-hosted
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Java
+              uses: actions/setup-java@v2
+              with:
+                  java-version: '17'
+
+            - name: Move to backend directory
+              run: cd backend
+
+            - name: Install Dependencies
+              run: ./mvnw clean install
+
+            - name: Run Linter (Checkstyle)
+              run: ./mvnw checkstyle:check
+
+            - name: Run Tests
+              run: ./mvnw test
+
+            - name: Build
+              run: ./mvnw package
