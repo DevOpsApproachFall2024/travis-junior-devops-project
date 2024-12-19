@@ -63,6 +63,9 @@ jobs:
                   java-version: '17'
                   distribution: 'temurin'
 
+            - name: Make Maven Wrapper Executable
+              run: chmod +x ./backend/mvnw
+
             - name: Install Dependencies
               working-directory: ./backend
               run: ./mvnw clean install
