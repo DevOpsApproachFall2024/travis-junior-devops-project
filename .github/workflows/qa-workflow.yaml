@@ -22,11 +22,12 @@ jobs:
 
             - 
                 name: Setup Chrome
-                uses: browser-actions/setup-chrome@v1
                 id: setup-chrome
-                with:
-                    chrome-version: 'latest'
-                    install-dependencies: true
+                run:
+                    sudo apt-get update
+                    sudo apt-get install -y google-chrome-stable
+                    echo "chrome-path=$(which google-chrome-stable)" >> $GITHUB_ENV
+
             
             - 
                 name: Install NPM Dependencies
