@@ -52,8 +52,7 @@ jobs:
                   distribution: 'temurin'
 
             - name: Make Maven Wrapper Executable
-              working-directory: ./backend
-              run: chmod +x mvnw
+              run: chmod +x ./backend/mvnw
 
             - name: Install Dependencies
               working-directory: ./backend
