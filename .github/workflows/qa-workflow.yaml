@@ -19,19 +19,31 @@ jobs:
                 uses: actions/setup-node@v2
                 with:
                     node-version: '20'
+
+            - 
+                name: Setup Chrome
+                uses: browser-actions/setup-chrome@v1
+                id: setup-chrome
+                with:
+                    chrome-version: 'latest'
+                    install-dependencies: true
             
             - 
-                name: Install Dependencies
+                name: Install NPM Dependencies
                 working-directory: ./frontend
                 run: npm install
+            
 
             -
                 name: Run Linter
                 working-directory: ./frontend
                 run: npm run lint
+
             -
                 name: Run Tests
                 working-directory: ./frontend
+                env:
+                    CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
                 run: npm run test-headless
             - 
                 name: Test Build
