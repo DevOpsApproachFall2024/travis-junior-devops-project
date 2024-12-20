@@ -7,7 +7,7 @@ on:
 
 jobs:
     frontend:
-        runs-on: self-hosted
+        runs-on: alpine-latest
 
         steps:
             -
@@ -19,20 +19,16 @@ jobs:
                 uses: actions/setup-node@v2
                 with:
                     node-version: '20'
-
-            - 
-                name: Setup Chrome
-                id: setup-chrome
-                run:
-                    sudo apt-get update
-                    sudo apt-get install -y google-chrome-stable
-                    echo "chrome-path=$(which google-chrome-stable)" >> $GITHUB_ENV
-
             
             - 
                 name: Install NPM Dependencies
                 working-directory: ./frontend
                 run: npm install
+            - 
+                name: Setup Chrome
+                id: setup-chrome
+                run: |
+                  apk add --no-cache chromium
             
 
             -
@@ -44,7 +40,7 @@ jobs:
                 name: Run Tests
                 working-directory: ./frontend
                 env:
-                    CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
+                    CHROME_BIN: /usr/bin/chromium-browser
                 run: npm run test-headless
             - 
                 name: Test Build
