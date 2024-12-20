@@ -14,35 +14,8 @@ import { CommonModule, NgIf } from '@angular/common';
     </div>
     <div *ngIf="result !== null">
         Fibonacci number at position {{ fibonacciSequenceControl.value }} is {{ result }}
-    </div>
+    </div>    
   `,
-  styles: [`
-    input {
-      margin-right: 10px;
-      border: 2px solid green;
-      padding: 5px;
-      border-radius: 5px;
-    }
-    button {
-      margin-top: 10px;
-      background-color: red;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: darkred;
-    }
-    div {
-      margin-top: 10px;
-      color: green;
-    }
-    .error {
-      color: red;
-    }
-  `],
   imports: [ReactiveFormsModule, NgIf, CommonModule],
   standalone: true,
   providers: [ApiService]
