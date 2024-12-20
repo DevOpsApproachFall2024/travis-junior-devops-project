@@ -7,7 +7,7 @@ on:
 
 jobs:
     frontend:
-        runs-on: alpine-latest
+        runs-on: ubuntu-latest
 
         steps:
             -
@@ -24,13 +24,15 @@ jobs:
                 name: Install NPM Dependencies
                 working-directory: ./frontend
                 run: npm install
-            - 
-                name: Setup Chrome
-                id: setup-chrome
-                run: |
-                  apk add --no-cache chromium
-            
 
+            - 
+              name: Setup Chrome
+              uses: browser-actions/setup-chrome@v1.7.2
+              id: setup-chrome
+              with:
+                chrome-version: 'latest'
+                install-dependencies: true
+            
             -
                 name: Run Linter
                 working-directory: ./frontend
@@ -40,7 +42,7 @@ jobs:
                 name: Run Tests
                 working-directory: ./frontend
                 env:
-                    CHROME_BIN: /usr/bin/chromium-browser
+                    CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
                 run: npm run test-headless
             - 
                 name: Test Build
