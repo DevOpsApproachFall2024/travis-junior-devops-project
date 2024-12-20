@@ -5,11 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:production": "ng build --configuration production",
+    "build:development": "ng build --configuration development",
+    "build:ci": "ng build --configuration ci",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +34,7 @@
     "@angular/compiler-cli": "^17.3.0",
     "@puppeteer/ng-schematics": "^0.7.0",
     "@types/jasmine": "~5.1.0",
+    "@types/node": "^22.10.2",
     "angular-eslint": "19.0.2",
     "eslint": "^9.16.0",
     "jasmine": "5.5.0",
@@ -41,7 +44,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "puppeteer": "^23.11.1",
     "typescript": "~5.4.2",
     "typescript-eslint": "8.18.0"
   }

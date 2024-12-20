@@ -25,10 +25,16 @@ FROM base AS build-app
 
 # Dummy dependancy to ensure tests pass before building
 COPY --from=run_tests /tmp/dummy* /tmp 
+COPY ./src/environments/environment.ts ./src/environments/environment.prod.ts
 
-RUN npm run build --prod
+ARG API_URL
+ENV API_URL=${API_URL}
+RUN sed -i 's|%#API_URL#%|'"$API_URL"'|g' ./src/environments/environment.prod.ts && npm run build:production
+
 
 FROM nginx:1.27.3-alpine
+
+EXPOSE 3000
 
 COPY --from=build-app /app/dist/frontend/browser /usr/share/nginx/html
 
