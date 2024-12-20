@@ -1,0 +1,82 @@
+name: QA Workflow
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    frontend:
+        runs-on: ubuntu-latest
+
+        steps:
+            -
+                name: Checkout
+                uses: actions/checkout@v4
+            
+            - 
+                name: Setup Node
+                uses: actions/setup-node@v2
+                with:
+                    node-version: '20'
+            
+            - 
+                name: Install NPM Dependencies
+                working-directory: ./frontend
+                run: npm install
+
+            - 
+              name: Setup Chrome
+              uses: browser-actions/setup-chrome@v1.7.2
+              id: setup-chrome
+              with:
+                chrome-version: 'latest'
+                install-dependencies: true
+            
+            -
+                name: Run Linter
+                working-directory: ./frontend
+                run: npm run lint
+
+            -
+                name: Run Tests
+                working-directory: ./frontend
+                env:
+                    CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
+                run: npm run test-headless
+            - 
+                name: Test Build
+                working-directory: ./frontend
+                run: npm run build --prod
+            
+    backend:
+        runs-on: self-hosted
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Java
+              uses: actions/setup-java@v2
+              with:
+                  java-version: '17'
+                  distribution: 'temurin'
+
+            - name: Make Maven Wrapper Executable
+              run: chmod +x ./backend/mvnw
+
+            - name: Install Dependencies
+              working-directory: ./backend
+              run: ./mvnw clean install
+
+            - name: Run Linter (Checkstyle)
+              working-directory: ./backend
+              run: ./mvnw checkstyle:check
+
+            - name: Run Tests
+              working-directory: ./backend
+              run: ./mvnw test
+
+            - name: Build
+              working-directory: ./backend
+              run: ./mvnw package

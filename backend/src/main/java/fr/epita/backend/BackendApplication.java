@@ -11,22 +11,22 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BackendApplication.class, args);
+    }
 
-	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-		return args -> {
+    @Bean
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        return args -> {
 
-			System.out.println("Let's inspect the beans provided by Spring Boot:");
+            System.out.println("Let's inspect the beans provided by Spring Boot: Nope we not doing that");
 
-			String[] beanNames = ctx.getBeanDefinitionNames();
-			Arrays.sort(beanNames);
-			for (String beanName : beanNames) {
-				System.out.println(beanName);
-			}
+            final String[] beanNames = ctx.getBeanDefinitionNames();
+            Arrays.sort(beanNames);
+            //for (String beanName : beanNames) {
+            //    System.out.println(beanName);
+            //}
 
-		};
-	}
+        };
+    }
 }
