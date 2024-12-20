@@ -30,6 +30,8 @@ RUN npm run build --prod
 
 FROM nginx:1.27.3-alpine
 
+EXPOSE 3000
+
 COPY --from=build-app /app/dist/frontend/browser /usr/share/nginx/html
 
 
