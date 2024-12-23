@@ -7,6 +7,7 @@ WORKDIR /backend
 # Copy the Maven project files
 COPY pom.xml ./
 COPY src ./src
+COPY checkstyle.xml ./
 
 # Cache Maven dependencies
 RUN mvn dependency:go-offline -B
