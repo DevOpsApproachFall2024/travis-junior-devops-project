@@ -47,7 +47,7 @@ jobs:
             - 
                 name: Test Build
                 working-directory: ./frontend
-                run: npm run build --prod
+                run: npm run build:ci
             
     backend:
         runs-on: self-hosted

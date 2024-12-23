@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #a8e6ff, #ffffff);
+    color: #333;
+  }
+  
+  .christmas-homepage {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .header {
+    background-color: #d00000;
+    color: #fff;
+    padding: 15px;
+  }
+  
+  .title {
+    font-size: 2.5em;
+    margin: 0;
+  }
+  
+  .navigation {
+    margin: 15px 0;
+  }
+  
+  .nav-link {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  
+  .nav-link:hover {
+    text-decoration: underline;
+  }
+  
+  .main-content {
+    padding: 20px;
+  }
+  
+  .welcome-section {
+    margin-bottom: 30px;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .feature-card {
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .feature-card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .footer {
+    background-color: #d00000;
+    color: #fff;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
