@@ -1,7 +1,7 @@
 package fr.epita.backend;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -21,15 +21,25 @@ public class BackendControllerTest {
 
     @Test
     public void getHello() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("Let's get rolling!!!")));
+                .andExpect(jsonPath("$").value("Let's get rolling!!!"));
     }
 
     @Test
-    public void getFibonacci() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/fibonacci/42").accept(MediaType.APPLICATION_JSON))
+    public void getFibonacciValidInput() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/fibonacci/42")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("The Fibonacci number at position 42 is: 267914296")));
+                .andExpect(jsonPath("$.result").value(267914296));
+    }
+
+    @Test
+    public void getFibonacciInvalidInput() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/fibonacci/-1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.error").value("n must be greater than 0"));
     }
 }

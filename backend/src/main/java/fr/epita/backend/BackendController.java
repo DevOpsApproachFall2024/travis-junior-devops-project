@@ -1,5 +1,8 @@
 package fr.epita.backend;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 
 @RestController
 public class BackendController {
+    private final ObjectMapper mapper = new ObjectMapper();
 
+    @CrossOrigin
     @GetMapping("/")
     public ResponseEntity<String> index() {
         return ResponseEntity.ok("Let's get rolling!!!");
@@ -19,15 +24,18 @@ public class BackendController {
      * @param n The position in the Fibonacci sequence.
      * @return The nth Fibonacci number.
      */
-
+    @CrossOrigin
     @GetMapping("/fibonacci/{n}")
-    public ResponseEntity<String> fibonacci(@PathVariable("n") int n) {
+    public ObjectNode fibonacci(@PathVariable("n") int n) {
         if (n < 0) {
-            return ResponseEntity.badRequest().body("Error: Fibonacci sequence is not defined for negative numbers.");
+            final ObjectNode error = mapper.createObjectNode();
+            error.put("error", "n must be greater than 0");
+            return error;
         }
         final long result = computeFibonacci(n);
-        final String response = "The Fibonacci number at position " + n + " is: " + result;
-        return ResponseEntity.ok(response);
+        final ObjectNode objectnode = mapper.createObjectNode();
+        objectnode.put("result", result);
+        return objectnode;
     }
 
     // Helper method to compute Fibonacci
