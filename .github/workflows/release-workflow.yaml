@@ -56,6 +56,8 @@ jobs:
                 with:
                     context: ./frontend
                     push: true
+                    build-args: |
+                        API_URL=http://localhost:8080
                     tags: ${{ steps.meta.outputs.tags }}
     backend:
         runs-on: self-hosted
